@@ -1,44 +1,56 @@
-# 🌦️ ATMOS INTELLIGENCE
+# ATMOS INTELLIGENCE
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
-[![Machine Learning](https://img.shields.io/badge/Machine_Learning-Random_Forest-success.svg)](#)
+**English** · [简体中文](./README.zh-CN.md)
 
-## 📌 Project Overview
-Accurate weather forecasting is crucial for various sectors, from agriculture and transportation to disaster preparedness and renewable energy. 
+![天象智研 ATMOS INTELLIGENCE](./docs/assets/cover.webp)
 
-This project implements an end-to-end **Machine Learning Pipeline** to predict specific weather conditions (`condition_text`) by leveraging a rich, multi-dimensional dataset from the World Weather Repository. 
+*Project concept artwork · Created with ImageGen*
 
-## 📊 Dataset & Features
-The model integrates heterogeneous data sources to capture complex environmental patterns. Key feature categories include:
+**Chinese name: 天象智研.** Recognizing weather conditions from observations and exploring the relationships between data, features, and models.
 
-* **📍 Geographic Location:** `country`, `latitude`, `longitude`, `time_zone`
-* **🌡️ Meteorological Metrics:** `temperature_fahrenheit`, `humidity`, `uv_index`
-* **🌫️ Air Quality Indices (AQI):** `air_quality_Carbon_Monoxide`, `air_quality_us-epa-index`
-* **🌔 Astronomical Data:** `sunrise`, `sunset`, `moon_phase`
+**Python · Pandas · NumPy · Scikit-learn · Jupyter Notebook**
 
-**Target Variable:** `condition_text` (Categorical label representing the specific weather state, e.g., Sunny, Partly Cloudy, Rain).
+## Overview
 
-## 🧠 Machine Learning Pipeline
-The project follows a rigorous data science workflow:
+ATMOS INTELLIGENCE is a machine-learning project built around weather data. The public notebook records data cleaning, exploratory analysis, outlier detection, feature-importance analysis, and modeling experiments targeting `condition_text`.
 
-1. **Data Preprocessing & Cleaning:** * Addressed missing values and standardized data formats.
-   * Implemented **Outlier Detection** algorithms to remove anomalous readings and improve model robustness.
-2. **Feature Engineering:**
-   * Applied **Label Encoding** to transform text-based categorical labels (e.g., weather conditions) into machine-readable numerical values.
-3. **Model Training (Random Forest):**
-   * Selected the **RandomForestClassifier** for its resilience to overfitting and capability to handle non-linear relationships.
-   * Configured the ensemble model with **100 decision trees** (`n_estimators=100`) to maximize predictive accuracy through aggregate voting.
+The current primary task is to identify observed weather conditions, such as sunny, cloudy, or rainy, from observation features. Forecasting future weather is a follow-up research direction requiring its own temporal split and validation design.
 
-## 🛠️ Tech Stack
-* **Language:** Python 3
-* **Data Manipulation:** Pandas, NumPy
-* **Machine Learning:** Scikit-Learn
-* **Environment:** Jupyter Notebook
+## Data and Features
 
-## 🚀 Future Enhancements
-* Incorporate Deep Learning architectures (e.g., Neural Networks) for time-series forecasting.
-* Deploy the model via a REST API (Flask/FastAPI) for real-time weather prediction inference.
+The notebook reads `GlobalWeatherRepository.csv`. The original observations include geographic, meteorological, air-quality, and astronomical information. These describe the dataset's fields, not a claim that every field is used by the final model.
 
----
-*Developed as a demonstration of applied machine learning in environmental data science.*
+| Area | Examples |
+| --- | --- |
+| Weather observations | Temperature, wind speed, pressure, precipitation, humidity, cloud cover, visibility, and UV index |
+| Air quality | Carbon monoxide, ozone, nitrogen dioxide, particulate matter, and air-quality indices |
+| Target | `condition_text`, the weather condition associated with an observation |
+
+The random-forest experiment uses numeric weather and air-quality features and encodes the target condition labels. See the notebook for the exact fields and processing steps.
+
+## Experiment Workflow
+
+1. **Clean records:** normalize selected location records and condition labels, then inspect distributions.
+2. **Inspect outliers:** apply Isolation Forest to numeric features and construct a filtering mask.
+3. **Explore features:** examine visualizations, correlations, and feature importance.
+4. **Build models:** the notebook contains several model experiments, including a random-forest classifier with `n_estimators=100` and `random_state=42`.
+5. **Analyze outputs:** retain experiment outputs and comparisons as a basis for improving evaluation.
+
+## Evaluation and Next Steps
+
+The existing experiments use a random train/test split. Some evaluation cells still apply regression metrics such as MSE and R² to encoded weather categories. Follow-up work should add classification measures such as accuracy, macro F1, and confusion matrices, and verify feature/label alignment after outlier filtering.
+
+Future-weather forecasting also requires time-based data splits, leakage checks, and comparable baselines. Deep-learning time-series models and a REST API remain planned enhancements.
+
+## Repository Contents
+
+- [`Project_Codes_and_Notes.ipynb`](./Project_Codes_and_Notes.ipynb): experiment code, notes, and existing outputs.
+- `README.md`: English documentation.
+- [`README.zh-CN.md`](./README.zh-CN.md): Chinese documentation.
+- `docs/assets/cover.webp`: project concept poster.
+
+## Viewing and Running
+
+Open the notebook directly on GitHub to inspect its code and existing outputs, or download it for Jupyter Notebook or JupyterLab.
+
+`GlobalWeatherRepository.csv` is not currently included in this repository. Re-execution requires a compatible data file, a checked file path, and dependencies matching the notebook's imports. The environment and execution order have not yet been packaged as a one-command workflow with locked dependencies. Stored outputs do not establish reproducibility in a fresh environment.
